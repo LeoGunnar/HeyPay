@@ -5,10 +5,32 @@ import {
   createRouteHandlerClient
 } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "@/types/database";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { createMockSupabaseClient, isSupabaseConfigured } from "./mock";
 
-export const createServerClient = () =>
-  createServerComponentClient<Database>({ cookies });
+type TypedSupabaseClient = SupabaseClient<
+  Database,
+  "public",
+  "public",
+  Database["public"]
+>;
 
-export const createActionClient = () => createServerActionClient<Database>({ cookies });
+const getServerComponentClient = (): TypedSupabaseClient =>
+  createServerComponentClient<Database>({ cookies }) as unknown as TypedSupabaseClient;
 
-export const createRouteClient = () => createRouteHandlerClient<Database>({ cookies });
+const getServerActionClient = (): TypedSupabaseClient =>
+  createServerActionClient<Database>({ cookies }) as unknown as TypedSupabaseClient;
+
+const getRouteHandlerClient = (): TypedSupabaseClient =>
+  createRouteHandlerClient<Database>({ cookies }) as unknown as TypedSupabaseClient;
+
+const getClient = (): TypedSupabaseClient =>
+  isSupabaseConfigured ? getServerComponentClient() : createMockSupabaseClient();
+
+export const createServerClient = (): TypedSupabaseClient => getClient();
+
+export const createActionClient = (): TypedSupabaseClient =>
+  isSupabaseConfigured ? getServerActionClient() : createMockSupabaseClient();
+
+export const createRouteClient = (): TypedSupabaseClient =>
+  isSupabaseConfigured ? getRouteHandlerClient() : createMockSupabaseClient();

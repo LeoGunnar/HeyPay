@@ -2,11 +2,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "@/types/database";
+import { isSupabaseConfigured } from "@/lib/supabase/mock";
 
 const PROTECTED_PATHS = new Set(["/", "/admin", "/settings"]);
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (!isSupabaseConfigured) {
+    return NextResponse.next();
+  }
+
   const response = NextResponse.next();
 
   const supabase = createMiddlewareClient<Database>({ req: request, res: response });

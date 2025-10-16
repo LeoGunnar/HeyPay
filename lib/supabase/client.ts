@@ -1,9 +1,9 @@
-import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/types/database";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import type { Database } from "@/types/database";
+import { createMockSupabaseClient, isSupabaseConfigured } from "./mock";
 
 export function createBrowserClient() {
-  return createSupabaseBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  return isSupabaseConfigured
+    ? createClientComponentClient<Database>()
+    : createMockSupabaseClient();
 }
