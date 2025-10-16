@@ -2,6 +2,9 @@ import BookingOverview from "@/components/BookingOverview";
 import EmptyState from "@/components/EmptyState";
 import { createServerClient } from "@/lib/supabase/server";
 import type { Booking } from "@/types/booking";
+import type { Database } from "@/types/database";
+
+type BookingRow = Database["public"]["Tables"]["bookings"]["Row"];
 
 export default async function OverviewPage() {
   const supabase = createServerClient();
@@ -35,7 +38,7 @@ export default async function OverviewPage() {
     );
   }
 
-  const bookings: Booking[] = data.map((booking) => ({
+  const bookings: Booking[] = data.map((booking: BookingRow) => ({
     id: booking.id,
     guestName: booking.guest_name,
     propertyName: booking.property_name,
