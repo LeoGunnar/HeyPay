@@ -3,11 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import type { Route } from "next";
 import type { UserRole } from "@/lib/auth";
 
-const LINKS = [
-  { href: "/", label: "Overview", roles: ["agent", "admin"] as const },
-  { href: "/admin", label: "Admin", roles: ["admin"] as const }
+interface NavigationLink {
+  href: Route;
+  label: string;
+  roles: UserRole[];
+}
+
+const LINKS: NavigationLink[] = [
+  { href: "/", label: "Overview", roles: ["agent", "admin"] },
+  { href: "/admin", label: "Admin", roles: ["admin"] }
 ];
 
 interface NavigationProps {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 
 interface EmptyStateProps {
   title: string;
@@ -8,6 +9,10 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({ title, description, actionLabel, actionHref }: EmptyStateProps) {
+  const resolvedHref: Route | URL = actionHref.startsWith("http")
+    ? new URL(actionHref)
+    : (actionHref as Route);
+
   return (
     <section className="flex flex-col items-center justify-center gap-6 rounded-3xl border border-dashed border-brand-turquoise/40 bg-white/70 p-12 text-center shadow-sm backdrop-blur">
       <div className="space-y-2">
@@ -15,7 +20,7 @@ export default function EmptyState({ title, description, actionLabel, actionHref
         <p className="max-w-md text-sm text-slate-600">{description}</p>
       </div>
       <Link
-        href={actionHref}
+        href={resolvedHref}
         className="rounded-full bg-brand-turquoise px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-teal"
       >
         {actionLabel}
