@@ -49,3 +49,24 @@ The interface follows Hey Iceland’s colour palette: teal, turquoise, warm neut
 - `npm run start` – run the production build.
 - `npm run lint` – check the codebase with ESLint.
 
+## Deploying with Cloudflare Wrangler
+
+The project includes a `wrangler.jsonc` file so you can upload the compiled Next.js assets without passing additional flags. To deploy:
+
+1. Build the application so the `.next` directory contains the production assets:
+   ```bash
+   npm run build
+   ```
+2. Upload the assets directory using Wrangler:
+   ```bash
+   npx wrangler versions upload
+   ```
+
+If you prefer to specify the directory explicitly, pass the `--assets` flag when uploading:
+
+```bash
+npx wrangler versions upload --assets=.next/static
+```
+
+This resolves the `Missing entry-point to Worker script or to assets directory` error by pointing Wrangler to the generated static files.
+

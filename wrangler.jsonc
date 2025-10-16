@@ -1,0 +1,7 @@
+{
+  "name": "hey-iceland-bookings",
+  "compatibility_date": "2024-05-17",
+  "assets": {
+    "directory": ".next/static"
+  }
+}
