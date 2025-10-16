@@ -51,18 +51,14 @@ The interface follows Hey Iceland’s colour palette: teal, turquoise, warm neut
 
 ## Deploying with Cloudflare Wrangler
 
-The project includes a `wrangler.jsonc` file so you can upload the compiled Next.js assets without passing additional flags. To deploy:
+The project includes a `wrangler.jsonc` file so you can upload the compiled Next.js assets without passing additional flags. Wrangler now executes `npm run build` automatically before packaging, which ensures the `.next/static` directory exists even in clean build environments. To deploy:
 
-1. Build the application so the `.next` directory contains the production assets:
-   ```bash
-   npm run build
-   ```
-2. Upload the assets directory using Wrangler:
+1. Run the upload command:
    ```bash
    npx wrangler versions upload
    ```
 
-If you prefer to specify the directory explicitly, pass the `--assets` flag when uploading:
+Wrangler will build the Next.js project first and then upload the generated static assets. If you prefer to run the build yourself (for example, to inspect the bundle locally), execute `npm run build` manually and then rerun the upload. You can also override the directory explicitly with the `--assets` flag when uploading:
 
 ```bash
 npx wrangler versions upload --assets=.next/static

@@ -1,6 +1,9 @@
 {
   "name": "hey-iceland-bookings",
   "compatibility_date": "2024-05-17",
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
     "directory": ".next/static"
   }
