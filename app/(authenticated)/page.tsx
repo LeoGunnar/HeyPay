@@ -33,7 +33,7 @@ export default async function OverviewPage() {
         title="No bookings yet"
         description="Bookings created in Supabase will appear here instantly."
         actionLabel="Create booking"
-        actionHref="https://app.supabase.com/"
+        actionHref={new URL("https://app.supabase.com/")}
       />
     );
   }
